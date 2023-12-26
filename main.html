@@ -56,6 +56,53 @@
             
         </div>
     </div>
+    <table>
+        <tbody>
+        <tr>
+            <th>Долар</th>
+        </tr>
+        <tr>
+            <th>Продаж</th>
+            <th>Купівля</th>
+        </tr>
+        <tr>
+            <th class="dollarSell">kaput</th>
+            <th class="dollarBuy">kaput</th>
+        </tr>
+        <tr>
+            <th>Євро</th>
+        </tr>
+        <tr>
+            <th>Продаж</th>
+            <th>Купівля</th>
+        </tr>
+        <tr>
+            <th class="euroSell">kaput</th>
+            <th class="euroBuy">kaput</th>
+        </tr>
+    </tbody>
+    </table>
     </main>
+    <script>
+        const url = 'https://api.monobank.ua/bank/currency'
+        const data = fetch(url)
+        //980 - гривня | 978 - євро | 840 - долар
+        .then((response) => response.json())
+        .then((data) =>{
+            for (var item in data){
+                console.log(data[item])
+                if (data[item].currencyCodeA == 840){
+                    console.log(document.querySelector('.dollarSell'))
+                    document.querySelector('.dollarSell').innerHTML = data[item].rateSell;
+                    document.querySelector('.dollarBuy').innerHTML = data[item].rateBuy;
+                }
+                if (data[item].currencyCodeA == 978){
+                    document.querySelector('.euroSell').innerHTML = data[item].rateSell;
+                    document.querySelector('.euroBuy').innerHTML = data[item].rateBuy;
+                    break
+                }
+            };
+        })
+    </script>
 </body>
 </html>
